@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Taberna Pompeyana · Restaurante en Madrid</title>
+  <meta name="description" content="Taberna Pompeyana — cocina tradicional, pizzas artesanales, raciones y tostas en el corazón de Madrid. Inspirados en la antigua Pompeya.">
+  <meta name="theme-color" content="#0a0a0a">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Taberna Pompeyana · Madrid">
+  <meta property="og:description" content="Cocina con carácter en el corazón de Madrid. Pizzas artesanales, raciones y tostas.">
+  <meta property="og:type" content="restaurant">
+  <meta property="og:locale" content="es_ES">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="img/logo.png">
+  <link rel="apple-touch-icon" href="img/logo.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* --- VARIABLES --- */
+    :root {
+      --bg: #0a0a0a;
+      --bg-elevated: #111111;
+      --bg-card: rgba(255, 255, 255, 0.04);
+      --border: rgba(255, 255, 255, 0.08);
+      --border-gold: rgba(200, 162, 74, 0.3);
+      --text: #f5f5f5;
+      --text-muted: rgba(255, 255, 255, 0.6);
+      --gold: #c8a24a;
+      --gold-light: #dbb867;
+      --gold-glow: rgba(200, 162, 74, 0.15);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --radius-lg: 24px;
+      --container: 1140px;
+      --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* --- RESET --- */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; border: none; background: none; font: inherit; color: inherit; }
+
+    .container {
+      width: 100%;
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* --- HEADER --- */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(10, 10, 10, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: background var(--transition);
+    }
+
+    .header--scrolled {
+      background: rgba(10, 10, 10, 0.95);
+    }
+
+    .header__inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 64px;
+    }
+
+    .header__brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .header__logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border-gold);
+      flex-shrink: 0;
+    }
+
+    .header__logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .header__title {
+      font-family: 'Cinzel', serif;
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .header__subtitle {
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .header__nav {
+      display: none;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .header__link {
+      padding: 8px 16px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      border-radius: var(--radius-sm);
+      transition: color var(--transition), background var(--transition);
+    }
+
+    .header__link:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .header__cta {
+      padding: 8px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #0a0a0a;
+      background: var(--gold);
+      border-radius: var(--radius-sm);
+      transition: background var(--transition), transform var(--transition);
+    }
+
+    .header__cta:hover {
+      background: var(--gold-light);
+      transform: translateY(-1px);
+    }
+
+    /* Burger */
+    .header__burger {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 8px;
+    }
+
+    .header__burger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: transform var(--transition), opacity var(--transition);
+    }
+
+    .header__burger.active span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .header__burger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .header__burger.active span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* --- HERO --- */
+    .hero {
+      padding: 100px 0 40px;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse 800px 600px at 80% 30%, var(--gold-glow), transparent),
+        radial-gradient(ellipse 600px 400px at 20% 60%, rgba(200, 162, 74, 0.06), transparent);
+    }
+
+    .hero__inner {
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .hero__badge {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid var(--border-gold);
+      padding: 6px 16px;
+      border-radius: 999px;
+      margin-bottom: 16px;
+    }
+
+    .hero__title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(28px, 7vw, 52px);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero__text {
+      font-size: 16px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 480px;
+      margin-bottom: 24px;
+    }
+
+    .hero__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .hero__meta {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .hero__meta-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .hero__meta-item svg {
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .hero__image {
+      position: relative;
+      width: 80%;
+      max-width: 400px;
+    }
+
+    .hero__image img {
+      position: relative;
+      z-index: 1;
+      filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.4));
+      animation: heroFloat 6s ease-in-out infinite;
+    }
+
+    .hero__image-glow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90%;
+      height: 90%;
+      background: radial-gradient(circle, rgba(200, 162, 74, 0.15), transparent 70%);
+      border-radius: 50%;
+      filter: blur(40px);
+    }
+
+    @keyframes heroFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    /* --- BUTTONS --- */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 28px;
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: var(--radius);
+      transition: all var(--transition);
+      white-space: nowrap;
+    }
+
+    .btn--primary {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: #0a0a0a;
+      box-shadow: 0 4px 20px rgba(200, 162, 74, 0.3);
+    }
+
+    .btn--primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(200, 162, 74, 0.4);
+    }
+
+    .btn--outline {
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+    }
+
+    .btn--outline:hover {
+      border-color: var(--gold);
+      background: rgba(200, 162, 74, 0.08);
+    }
+
+    .btn--lg {
+      padding: 16px 36px;
+      font-size: 16px;
+    }
+
+    /* --- SOCIAL PROOF BAR --- */
+    .proof {
+      padding: 24px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-elevated);
+    }
+
+    .proof__inner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .proof__item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+    }
+
+    .proof__stars {
+      color: var(--gold);
+      font-size: 16px;
+      letter-spacing: 2px;
+    }
+
+    .proof__number {
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .proof__label {
+      color: var(--text-muted);
+    }
+
+    .proof__divider {
+      width: 1px;
+      height: 24px;
+      background: var(--border);
+      display: none;
+    }
+
+    /* --- SECTION HEADERS --- */
+    .section-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .section-tag {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(24px, 5vw, 38px);
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    /* --- FEATURED DISHES --- */
+    .dishes {
+      padding: 80px 0;
+    }
+
+    .dishes__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .dish {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: transform var(--transition), border-color var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .dish:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-gold);
+    }
+
+    .dish__image {
+      position: relative;
+      background:
+        radial-gradient(ellipse at center, rgba(200, 162, 74, 0.06), transparent 70%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.02));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      min-height: 200px;
+    }
+
+    .dish__image img {
+      max-height: 180px;
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.3));
+      transition: transform var(--transition);
+    }
+
+    .dish:hover .dish__image img {
+      transform: scale(1.05);
+    }
+
+    .dish__info {
+      padding: 20px 24px 24px;
+    }
+
+    .dish__category {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .dish__name {
+      font-family: 'Cinzel', serif;
+      font-size: 18px;
+      font-weight: 600;
+      margin: 6px 0 8px;
+    }
+
+    .dish__desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .dish--feature .dish__image {
+      min-height: 240px;
+      padding: 32px;
+    }
+
+    .dish--feature .dish__image img {
+      max-height: 220px;
+    }
+
+    .dish--feature .dish__name {
+      font-size: 22px;
+    }
+
+    .dishes__cta {
+      text-align: center;
+      margin-top: 48px;
+    }
+
+    /* --- ABOUT --- */
+    .about {
+      padding: 80px 0;
+      background: var(--bg-elevated);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .about__inner {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    .about__images {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .about__img {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background:
+        radial-gradient(ellipse at center, rgba(200, 162, 74, 0.05), transparent),
+        var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      aspect-ratio: 1;
+    }
+
+    .about__img img {
+      max-width: 90%;
+      filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.3));
+    }
+
+    .about__img--2 {
+      transform: translateY(24px);
+    }
+
+    .about__text {
+      color: var(--text-muted);
+      line-height: 1.75;
+      margin-bottom: 16px;
+      font-size: 15px;
+    }
+
+    .about__highlights {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .about__highlight {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .about__highlight-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(200, 162, 74, 0.1);
+      border: 1px solid var(--border-gold);
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    /* --- REVIEWS --- */
+    .reviews {
+      padding: 80px 0;
+    }
+
+    .reviews__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .review {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      transition: border-color var(--transition);
+    }
+
+    .review:hover {
+      border-color: var(--border-gold);
+    }
+
+    .review__stars {
+      color: var(--gold);
+      font-size: 18px;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+
+    .review__text {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--text-muted);
+      font-style: italic;
+      margin-bottom: 20px;
+    }
+
+    .review__author {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      font-size: 14px;
+    }
+
+    .review__author strong {
+      color: var(--text);
+    }
+
+    .review__author span {
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    /* --- LOCATION --- */
+    .location {
+      padding: 80px 0;
+      background: var(--bg-elevated);
+      border-top: 1px solid var(--border);
+    }
+
+    .location__inner {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .location__map {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      aspect-ratio: 16 / 10;
+    }
+
+    .location__map iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+
+    .location__details {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .location__card {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .location__icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(200, 162, 74, 0.1);
+      border: 1px solid var(--border-gold);
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .location__card h3 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .location__card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .location__card a {
+      color: var(--gold);
+      transition: color var(--transition);
+    }
+
+    .location__card a:hover {
+      color: var(--gold-light);
+    }
+
+    /* --- FINAL CTA --- */
+    .cta-final {
+      padding: 80px 0;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse 600px 400px at 30% 50%, var(--gold-glow), transparent);
+    }
+
+    .cta-final__inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 32px;
+    }
+
+    .cta-final__image {
+      width: 60%;
+      max-width: 300px;
+    }
+
+    .cta-final__image img {
+      filter: drop-shadow(0 16px 40px rgba(0, 0, 0, 0.4));
+      animation: heroFloat 7s ease-in-out infinite;
+    }
+
+    .cta-final__title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(26px, 6vw, 42px);
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .cta-final__text {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 440px;
+      margin-bottom: 24px;
+    }
+
+    .cta-final__actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    /* --- FOOTER --- */
+    .footer {
+      padding: 40px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer__inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      text-align: center;
+    }
+
+    .footer__brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .footer__brand img {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      border: 1px solid var(--border-gold);
+    }
+
+    .footer__name {
+      font-family: 'Cinzel', serif;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .footer__addr {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .footer__links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .footer__links a {
+      padding: 8px 16px;
+      font-size: 14px;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      transition: all var(--transition);
+    }
+
+    .footer__links a:hover {
+      color: var(--text);
+      border-color: var(--border-gold);
+      background: rgba(200, 162, 74, 0.08);
+    }
+
+    .footer__copy {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* --- MOBILE NAV OVERLAY --- */
+    .mobile-nav {
+      position: fixed;
+      top: 64px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 99;
+      background: rgba(10, 10, 10, 0.97);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .mobile-nav.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .mobile-nav a {
+      font-size: 20px;
+      font-weight: 500;
+      padding: 16px 32px;
+      color: var(--text-muted);
+      transition: color var(--transition);
+      border-radius: var(--radius);
+    }
+
+    .mobile-nav a:hover {
+      color: var(--text);
+    }
+
+    .mobile-nav .btn {
+      margin-top: 16px;
+    }
+
+    /* --- ANIMATIONS --- */
+    [data-animate] {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    [data-animate].visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* --- RESPONSIVE: Tablet (600px+) --- */
+    @media (min-width: 600px) {
+      .container { padding: 0 32px; }
+
+      .dishes__grid { grid-template-columns: repeat(2, 1fr); }
+
+      .dish--feature {
+        grid-column: 1 / -1;
+        flex-direction: row;
+      }
+
+      .dish--feature .dish__image {
+        flex: 1;
+        min-height: 280px;
+      }
+
+      .dish--feature .dish__info {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 32px;
+      }
+
+      .reviews__grid { grid-template-columns: repeat(2, 1fr); }
+      .reviews__grid .review:last-child { grid-column: 1 / -1; }
+
+      .proof__divider { display: block; }
+
+      .location__details { flex-direction: row; }
+      .location__card { flex: 1; }
+    }
+
+    /* --- RESPONSIVE: Desktop (900px+) --- */
+    @media (min-width: 900px) {
+      .header__nav { display: flex; }
+      .header__burger { display: none; }
+
+      .hero { padding: 120px 0 80px; }
+
+      .hero__inner {
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 48px;
+      }
+
+      .hero__content { flex: 1; }
+
+      .hero__image {
+        flex: 0 0 42%;
+        max-width: 480px;
+      }
+
+      .hero__text { font-size: 17px; }
+
+      .dishes__grid { grid-template-columns: repeat(3, 1fr); }
+
+      .dish--feature {
+        grid-column: 1 / -1;
+        flex-direction: row;
+      }
+
+      .about__inner {
+        flex-direction: row;
+        align-items: center;
+        gap: 64px;
+      }
+
+      .about__images { flex: 0 0 40%; }
+      .about__content { flex: 1; }
+
+      .reviews__grid { grid-template-columns: repeat(3, 1fr); }
+      .reviews__grid .review:last-child { grid-column: auto; }
+
+      .location__inner {
+        flex-direction: row;
+        gap: 32px;
+      }
+
+      .location__map {
+        flex: 1.5;
+        aspect-ratio: auto;
+        min-height: 380px;
+      }
+
+      .location__details {
+        flex: 1;
+        flex-direction: column;
+      }
+
+      .cta-final__inner {
+        flex-direction: row;
+        text-align: left;
+        gap: 64px;
+      }
+
+      .cta-final__image { flex: 0 0 35%; }
+      .cta-final__actions { justify-content: flex-start; }
+    }
+
+    /* --- RESPONSIVE: Large Desktop (1200px+) --- */
+    @media (min-width: 1200px) {
+      .hero__title { font-size: 56px; }
+      .dishes__grid { gap: 20px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <a href="#" class="header__brand">
+        <div class="header__logo">
+          <img src="img/logo.png" alt="Taberna Pompeyana" width="40" height="40">
+        </div>
+        <div>
+          <div class="header__title">Taberna Pompeyana</div>
+          <div class="header__subtitle">Madrid</div>
+        </div>
+      </a>
+
+      <nav class="header__nav" id="nav">
+        <a href="#platos" class="header__link">Platos</a>
+        <a href="#sobre" class="header__link">Nosotros</a>
+        <a href="#ubicacion" class="header__link">Ubicación</a>
+        <a href="https://wa.me/34695834544" class="header__cta">Reservar</a>
+      </nav>
+
+      <button class="header__burger" id="burger" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero__inner">
+      <div class="hero__content">
+        <p class="hero__badge">Est. Madrid</p>
+        <h1 class="hero__title">Cocina con alma,<br>inspirada en Pompeya</h1>
+        <p class="hero__text">Tradición española y recetas artesanales en un ambiente único en el corazón de Madrid. Pizzas al horno, raciones para compartir y tostas de autor.</p>
+        <div class="hero__actions">
+          <a href="https://tabernapompeyana.com/Carta.pdf" target="_blank" class="btn btn--primary">Ver carta</a>
+          <a href="https://wa.me/34695834544" class="btn btn--outline">Reservar mesa</a>
+        </div>
+        <div class="hero__meta">
+          <div class="hero__meta-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <span>12:00 – 00:00 todos los días</span>
+          </div>
+          <div class="hero__meta-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>Calle de Álvarez Gato, 5</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero__image">
+        <img src="img/03.png" alt="Ensalada de burrata con jamón y rúcula" width="520" height="420" loading="eager">
+        <div class="hero__image-glow"></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- SOCIAL PROOF BAR -->
+  <section class="proof">
+    <div class="container proof__inner">
+      <div class="proof__item">
+        <span class="proof__stars" aria-label="4.5 estrellas">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+        <span class="proof__label">4,5 en Google</span>
+      </div>
+      <div class="proof__divider"></div>
+      <div class="proof__item">
+        <span class="proof__number">+500</span>
+        <span class="proof__label">reseñas</span>
+      </div>
+      <div class="proof__divider"></div>
+      <div class="proof__item">
+        <span class="proof__number">@tabernapompeyana</span>
+        <span class="proof__label">Instagram</span>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- FEATURED DISHES -->
+  <section class="dishes" id="platos">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-tag">Nuestros platos</p>
+        <h2 class="section-title">Lo que más piden nuestros clientes</h2>
+      </div>
+
+      <div class="dishes__grid">
+        <article class="dish dish--feature" data-animate>
+          <div class="dish__image">
+            <img src="img/05.png" alt="Salsa pomodoro, mozarella y albahaca. Nuestra favorita." loading="lazy">
+          </div>
+          <div class="dish__info">
+            <span class="dish__category">Pizzas artesanales</span>
+            <h3 class="dish__name">Margarita</h3>
+            <p class="dish__desc">Salsa pomodoro, mozarella y albahaca. Nuestra favorita.</p>
+          </div>
+        </article>
+
+        <article class="dish" data-animate>
+          <div class="dish__image">
+            <img src="img/01.png" alt="Calamares fritos crujientes" loading="lazy">
+          </div>
+          <div class="dish__info">
+            <span class="dish__category">Raciones</span>
+            <h3 class="dish__name">Calamares a la romana</h3>
+            <p class="dish__desc">Crujientes y dorados, servidos con limón.</p>
+          </div>
+        </article>
+
+        <article class="dish" data-animate>
+          <div class="dish__image">
+            <img src="img/09.png" alt="Tosta de queso de cabra con cebolla caramelizada" loading="lazy">
+          </div>
+          <div class="dish__info">
+            <span class="dish__category">Tostas</span>
+            <h3 class="dish__name">Tosta Lupanar</h3>
+            <p class="dish__desc">Pan tostado, queso de cabra, cebolla caramelizada y balsámico.</p>
+          </div>
+        </article>
+
+        <article class="dish" data-animate>
+          <div class="dish__image">
+            <img src="img/02.png" alt="Croquetas caseras" loading="lazy">
+          </div>
+          <div class="dish__info">
+            <span class="dish__category">Raciones</span>
+            <h3 class="dish__name">Croquetas de jamón o boletus</h3>
+            <p class="dish__desc">Cremosas por dentro, crujientes por fuera.</p>
+          </div>
+        </article>
+
+        <article class="dish" data-animate>
+          <div class="dish__image">
+            <img src="img/07.png" alt="Pizza pepperoni" loading="lazy">
+          </div>
+          <div class="dish__info">
+            <span class="dish__category">Pizzas artesanales</span>
+            <h3 class="dish__name">Pizza Pepperoni</h3>
+            <p class="dish__desc">Salsa pomodoro, mozarella y pepperoni.</p>
+          </div>
+        </article>
+
+        <article class="dish" data-animate>
+          <div class="dish__image">
+            <img src="img/10.png" alt="Tosta de aguacate con mozzarella y huevo" loading="lazy">
+          </div>
+          <div class="dish__info">
+            <span class="dish__category">Tostas</span>
+            <h3 class="dish__name">Tosta minerva</h3>
+            <p class="dish__desc">Pan tostado, tomate, guacamole, mozzarella, aceite de oliva y orégano.</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="dishes__cta">
+        <a href="https://tabernapompeyana.com/Carta.pdf" target="_blank" class="btn btn--primary btn--lg">Ver carta completa</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ABOUT -->
+  <section class="about" id="sobre">
+    <div class="container about__inner">
+      <div class="about__images">
+        <div class="about__img about__img--1">
+          <img src="img/04.png" alt="Parrillada de verduras" loading="lazy">
+        </div>
+        <div class="about__img about__img--2">
+          <img src="img/06.png" alt="Pizza quattro formaggi" loading="lazy">
+        </div>
+      </div>
+      <div class="about__content">
+        <p class="section-tag">Nuestra historia</p>
+        <h2 class="section-title">Un rincón de Pompeya en Madrid</h2>
+        <p class="about__text">Taberna Pompeyana nace de la pasión por la buena mesa y la cultura mediterránea. Inspirados en la antigua ciudad romana, creamos un espacio donde la tradición española se encuentra con la cocina artesanal italiana.</p>
+        <p class="about__text">Cada plato se prepara con ingredientes frescos y la dedicación de quien cocina para los suyos. Nuestras pizzas se hornean al momento, nuestras raciones se sirven generosas y nuestras tostas son pequeñas obras de arte.</p>
+        <div class="about__highlights">
+          <div class="about__highlight">
+            <span class="about__highlight-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            </span>
+            <span>Ingredientes frescos cada día</span>
+          </div>
+          <div class="about__highlight">
+            <span class="about__highlight-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </span>
+            <span>Recetas con alma mediterránea</span>
+          </div>
+          <div class="about__highlight">
+            <span class="about__highlight-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </span>
+            <span>Ambiente para compartir</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- REVIEWS -->
+  <section class="reviews">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-tag">Opiniones</p>
+        <h2 class="section-title">Lo que dicen nuestros clientes</h2>
+      </div>
+
+      <div class="reviews__grid">
+        <blockquote class="review" data-animate>
+          <div class="review__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="review__text">"Un lugar con una decoración original, la atención muy buena y las raciones con una cantidad correcta. Un sitio al que volvería si estoy por el centro de Madrid."</p>
+          <footer class="review__author">
+            <strong>Nahomi</strong>
+            <span>Google Reviews</span>
+          </footer>
+        </blockquote>
+
+        <blockquote class="review" data-animate>
+          <div class="review__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="review__text">"Una experiencia excelente de principio a fin. El servicio fue impecable, especialmente por parte de Emiliano, quien destacó por su atención y recomendaciones. La comida estuvo deliciosa, con muy buena relación calidad-precio. El vino que nos sugirió fue todo un acierto y elevó aún más la experiencia. Sin duda, un lugar para volver."</p>
+          <footer class="review__author">
+            <strong>Ulises</strong>
+            <span>Google Reviews</span>
+          </footer>
+        </blockquote>
+
+        <blockquote class="review" data-animate>
+          <div class="review__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="review__text">"Fui a cenar con mi chico y fueron muy atentos y agradables, la comida abundante y muy rica. La sangría muy buena y tarta de queso estaba tremenda. Volveré seguro!"</p>
+          <footer class="review__author">
+            <strong>Iris</strong>
+            <span>Google Reviews</span>
+          </footer>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- LOCATION -->
+  <section class="location" id="ubicacion">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-tag">Encuéntranos</p>
+        <h2 class="section-title">Ven a visitarnos</h2>
+      </div>
+
+      <div class="location__inner">
+        <div class="location__map">
+          <iframe
+            title="Ubicación de Taberna Pompeyana en Google Maps"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3037.7!2d-3.7015!3d40.4155!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDI0JzU1LjgiTiAzwrA0MicwNS40Ilc!5e0!3m2!1ses!2ses!4v1"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen>
+          </iframe>
+        </div>
+
+        <div class="location__details">
+          <div class="location__card">
+            <div class="location__icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <h3>Dirección</h3>
+              <p>Calle de Álvarez Gato, 5<br>28012 Madrid</p>
+            </div>
+          </div>
+
+          <div class="location__card">
+            <div class="location__icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            <div>
+              <h3>Horario</h3>
+              <p>Todos los días<br>12:00 – 00:00</p>
+            </div>
+          </div>
+
+          <div class="location__card">
+            <div class="location__icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div>
+              <h3>Contacto</h3>
+              <p><a href="tel:+34915229375">915 229 375</a><br><a href="https://wa.me/34695834544">WhatsApp: 695 834 544</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- FINAL CTA -->
+  <section class="cta-final">
+    <div class="container cta-final__inner">
+      <div class="cta-final__image">
+        <img src="img/08.png" alt="Pizza artesanal" loading="lazy">
+      </div>
+      <div class="cta-final__content">
+        <h2 class="cta-final__title">Tu mesa te espera</h2>
+        <p class="cta-final__text">Reserva ahora y descubre por qué nuestros clientes siempre vuelven.</p>
+        <div class="cta-final__actions">
+          <a href="https://wa.me/34695834544" class="btn btn--primary btn--lg">Reservar por WhatsApp</a>
+          <a href="tel:+34915229375" class="btn btn--outline">Llamar al restaurante</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <img src="img/logo.png" alt="Taberna Pompeyana" width="48" height="48">
+        <div>
+          <div class="footer__name">Taberna Pompeyana</div>
+          <div class="footer__addr">Calle de Álvarez Gato, 5 · Madrid</div>
+        </div>
+      </div>
+      <div class="footer__links">
+        <a href="https://tabernapompeyana.com/Carta.pdf" target="_blank">Carta</a>
+        <a href="https://wa.me/34695834544">WhatsApp</a>
+        <a href="tel:+34915229375">Teléfono</a>
+        <a href="https://www.instagram.com/tabernapompeyana" target="_blank" rel="noopener">Instagram</a>
+      </div>
+      <p class="footer__copy">&copy; <span id="year"></span> Taberna Pompeyana. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+
+  <script>
+    (function () {
+      'use strict';
+
+      // Year
+      var yearEl = document.getElementById('year');
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+      // Header scroll effect
+      var header = document.getElementById('header');
+
+      function onScroll() {
+        if (window.scrollY > 40) {
+          header.classList.add('header--scrolled');
+        } else {
+          header.classList.remove('header--scrolled');
+        }
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+
+      // Mobile nav
+      var burger = document.getElementById('burger');
+      var mobileNav = null;
+
+      function createMobileNav() {
+        mobileNav = document.createElement('div');
+        mobileNav.className = 'mobile-nav';
+        mobileNav.innerHTML =
+          '<a href="#platos">Platos</a>' +
+          '<a href="#sobre">Nosotros</a>' +
+          '<a href="#ubicacion">Ubicación</a>' +
+          '<a href="https://wa.me/34695834544" class="btn btn--primary">Reservar mesa</a>';
+        document.body.appendChild(mobileNav);
+
+        mobileNav.querySelectorAll('a').forEach(function (link) {
+          link.addEventListener('click', closeMobileNav);
+        });
+      }
+
+      function toggleMobileNav() {
+        if (!mobileNav) createMobileNav();
+        var isOpen = mobileNav.classList.toggle('open');
+        burger.classList.toggle('active', isOpen);
+        burger.setAttribute('aria-expanded', isOpen);
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      }
+
+      function closeMobileNav() {
+        if (mobileNav) mobileNav.classList.remove('open');
+        burger.classList.remove('active');
+        burger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      }
+
+      burger.addEventListener('click', toggleMobileNav);
+
+      // Scroll animations
+      var animatedEls = document.querySelectorAll('[data-animate]');
+
+      if ('IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+        );
+
+        animatedEls.forEach(function (el) {
+          observer.observe(el);
+        });
+      } else {
+        animatedEls.forEach(function (el) {
+          el.classList.add('visible');
+        });
+      }
+
+      // Smooth scroll offset for fixed header
+      document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+        anchor.addEventListener('click', function (e) {
+          var targetId = this.getAttribute('href');
+          if (targetId === '#') return;
+          var target = document.querySelector(targetId);
+          if (!target) return;
+
+          e.preventDefault();
+          var headerHeight = header.offsetHeight;
+          var top = target.getBoundingClientRect().top + window.scrollY - headerHeight - 16;
+          window.scrollTo({ top: top, behavior: 'smooth' });
+        });
+      });
+    })();
+  </script>
+
+</body>
+</html>
